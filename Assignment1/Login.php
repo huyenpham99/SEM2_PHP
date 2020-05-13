@@ -1,9 +1,4 @@
-<?php
-//lay du lieu tu mysql đưa vào giao diện
-require_once("connect.php");
-//ra day duoc no la ket noi thanh cong
-$user = getAll("user");
-?>
+
 <!doctype html>
 <html lang="en">
 <head>
@@ -42,27 +37,7 @@ $user = getAll("user");
         <button type="submit" class="btn btn-success btn-lg btn-block col-2 " style="text-align: center; margin-left: 150px">Login</button>
     </div>
 </form>
-<h1 style="text-align: center; color: brown">USER LIST</h1>
-<table class="table">
-    <thead style="background-color: lavenderblush ">
-    <tr>
-        <th scope="col"> ID </th>
-        <th scope="col"> User Name </th>
-        <th scope="col"> Email </th>
-        <th scope="col"> Password </th>
-    </tr>
-    </thead>
-    <tbody>
-    <?php foreach ($user as $s): ?>
-        <tr>
-            <td><?php echo $s["id"]?></td>
-            <td><?php echo $s["name"]?></td>
-            <td><?php echo $s["email"]?></td>
-            <td><?php echo $s["password"]?></td>
-        </tr>
-    <?php endforeach;?>
-    </tbody>
-</table>
+
 
 </body>
 </html>
