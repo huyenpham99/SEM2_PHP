@@ -16,8 +16,8 @@ require_once "Student.php";
 <body>
 <div class="container">
     <div class="col-xs-6">
-        <h1 class="text-center">Edit</h1>
-        <form action="post_update.php" method="post">
+        <h1 class="text-center" style="color: ">Cập Nhật Thông Tin Sinh Viên</h1>
+        <form action="post_update.php" method="post" style="margin-left: 300px">
             <?php
             $id = $_GET["id"];
             $students = new \Assignment2\Student();
@@ -25,16 +25,16 @@ require_once "Student.php";
             ?>
             <input type="hidden" name="id" value="<?php echo $students->id;?>"/>
             <div class="form-group">
-                <input class="form-control" value="<?php echo $students->name;?>" name="name" type="text" placeholder="Name"/>
+                <input class="form-control col-6" value="<?php echo $students->name;?>" name="name" type="text" placeholder="Name"/>
             </div>
             <div class="form-group">
-                <input class="form-control" value="<?php echo $students->age;?>" name="age" type="text" placeholder="Age"/>
+                <input class="form-control col-6" value="<?php echo $students->age;?>" name="age" type="text" placeholder="Age"/>
             </div>
             <div class="form-group">
-                <input class="form-control" value="<?php echo $students->mark;?>" name="mark" type="text" placeholder="Mark"/>
+                <input class="form-control col-6" value="<?php echo $students->mark;?>" name="mark" type="text" placeholder="Mark"/>
             </div>
             <div class="form-group">
-                <button type="submit" class="btn btn-danger">Update</button>
+                <button style="margin-left: 120px" type="submit" class="btn btn-danger col-2">Update</button>
             </div>
         </form>
     </div>
