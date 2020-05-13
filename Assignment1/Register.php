@@ -24,13 +24,10 @@
         </div>
     </div>
 </nav>
-<form style="margin-left: 400px " action="/examples/actions/confirmation.php" method="post" >
+<form style="margin-left: 400px " action="post_register.php" method="post" >
     <h2 style="margin-left: 200px">Register</h2>
     <div class="form-group">
-        <div class="row">
-            <div class="col-xs-6"><input type="text"  class="form-control" style="margin-left: 17px" name="first_name" placeholder="First Name" required="required"></div>
-            <div class="col-xs-6"><input type="text"  style="margin-left: 40px" class="form-control" name="last_name" placeholder="Last Name" required="required"></div>
-        </div>
+        <input type="text"  class="form-control col-6"  name="name" placeholder="Name" required="required">
     </div>
     <div class="form-group">
         <input type="email" class="form-control col-6" name="email" placeholder="Email" required="required">
@@ -45,7 +42,7 @@
         <label class="checkbox-inline"><input type="checkbox" required="required"> I accept the <a href="#">Terms of Use</a> &amp; <a href="#">Privacy Policy</a></label>
     </div>
     <div class="form-group">
-        <label style="margin-left: 100px">You have an account? <a href="Login.php">Login Now</a> </label>
+        <label style="margin-left: 100px">You have an account? <a href="post_register.php">Login Now</a> </label>
     </div>
     <div class="form-group">
         <button type="submit" class="btn btn-success btn-lg btn-block col-2" style="text-align: center; margin-left: 150px">Register Now</button>

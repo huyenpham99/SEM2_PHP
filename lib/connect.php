@@ -1,24 +1,36 @@
-<?php //lay du lieu tu mysql dua vao php
+<?php
 function connect(){
-$host = "localhost";
-$userDB = "root";
-$passDB ="";
-$dbName ="productmanager";
-$conn = new mysqli($host,$userDB,$passDB,$dbName);//khong can port
+    $host = "localhost";
+    $userDB = "root";
+    $passDB = "";// xamp thi chuoi ""
+    $dbName = "1907m";
+    $conn = new mysqli($host,$userDB,$passDB,$dbName);// khong can port
 
-if($conn->connect_error){
-    die("connect fail");//die la ham dung luong dang chay , php la ngon ngu don luong (single threat)
+    if($conn->connect_error){
+        die("Connect fail"); // die la ham dung luong dang chay, php la ngon ngu don luong ( single thread)
+    }
+    return $conn;
 }
-return $conn;
-}
+
 function getAll($table){
-    $conn =connect();
+    $conn = connect();
     $sql_text = "SELECT * FROM ".$table;
-    $data =[];
-    $rs =$conn->query($sql_text);
-    if ($rs->num_rows >0){
+    $data = [];
+    $rs = $conn->query($sql_text);
+    if($rs->num_rows > 0){
         while ($row = $rs->fetch_assoc()){
-            $data [] =$row;
+            $data [] = $row;
+            // moi row la 1 mang, cos cac key la cac column
+        }
+    }
+    return $data;
+}
+
+function toArray($rs){
+    $data = [];
+    if($rs->num_rows > 0){
+        while ($row = $rs->fetch_assoc()){
+            $data [] = $row;
         }
     }
     return $data;

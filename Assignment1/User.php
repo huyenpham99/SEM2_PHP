@@ -1,43 +1,61 @@
 <?php
-//lay du lieu tu mysql đưa vào giao diện
-require_once("connect.php");
-//ra day duoc no la ket noi thanh cong
-$user = getAll("user");
-?>
-<!doctype html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport"
-          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Document</title>
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
-          integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
-</head>
-<body>
-<h1 style="text-align: center; color: brown">USER LIST</h1>
-<table class="table">
-    <thead style="background-color: lavenderblush ">
-    <tr>
-        <th scope="col"> ID </th>
-        <th scope="col"> User Name </th>
-        <th scope="col"> Email </th>
-        <th scope="col"> Password </th>
-    </tr>
-    </thead>
-    <tbody>
-    <?php foreach ($user as $s): ?>
-        <tr>
-            <td><?php echo $s["id"]?></td>
-            <td><?php echo $s["name"]?></td>
-            <td><?php echo $s["email"]?></td>
-            <td><?php echo $s["password"]?></td>
-        </tr>
-    <?php endforeach;?>
-    </tbody>
-</table>
-</body>
-</html>
+namespace assignment1;
+use lib\connector;
+use lib\model;
 
+require_once "../lib/Model.php";
 
+class User extends model {
+    public $id;
+    public $name;
+    public $email;
+    public $password;
+
+    protected $table = "users";
+
+    public function __construct($id=null,$name=null,$email=null,$password=null)
+    {
+        $this->id = $id;
+        $this->name = $name;
+        $this->email = $email;
+        $this->password = md5($password);
+    }
+
+    public function getUsers(){
+        $sql = "SELECT * FROM ".$this->getTable();
+        $rs = $this->getConn()->query($sql);
+        return $this->toArray($rs);
+    }
+
+    public function all(){
+        $sql = "SELECT * FROM ".$this->getTable();
+        $rs = $this->getConn()->query($sql);
+        return $this->toArray($rs);
+    }
+
+    public function save(){ // la su ket hop cua insert va update
+        $sql_text = "INSERT INTO ".$this->getTable()." (id,name,email,password)
+         VALUES(".(is_null($this->id)?'null':$this->id).",'".$this->name."','".$this->email."','".$this->password."') 
+        ON DUPLICATE KEY UPDATE name = '".$this->name."',email = '".$this->email. "', password = '".$this->password."';";
+        try{
+            $this->getConn()->query($sql_text);
+        }catch (\Exception $e){
+            die($e->getMessage());
+        }
+    }
+
+    public function find($id){
+        $sql_text = "SELECT * FROM ".$this->getTable()." WHERE id = ".$id;
+        $ary = $this->toArray($this->getConn()->query($sql_text));
+        if(count($ary) > 0){
+            $data = $ary[0];
+            return new User($data["id"],$data["name"],$data["email"],$data["password"]);
+        }
+        return null;
+    }
+
+    public function delete(){
+        $sql_text = "DELETE FROM ".$this->getTable()." WHERE id = ".$this->id;
+        $this->getConn()->query($sql_text);
+    }
+}
