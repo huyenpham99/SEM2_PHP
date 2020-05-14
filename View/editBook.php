@@ -1,4 +1,3 @@
-
 <!doctype html>
 <html lang="en">
 <head>
@@ -17,20 +16,16 @@
         <form action="?route=post_edit" method="post">
             <?php
             $id = $_GET["id"];
-            $user = new \Model\Book();
-            $user = $user->find($id);
-            $current = $_SESSION['user'];
+            $book = new \Model\Book();
+            $book = $book->find($id);
+            $current = $_SESSION['book'];
             ?>
-            <h2>Đang đăng nhập dưới tên: <?php echo $current['name']; ?></h2>
-            <input type="hidden" name="id" value="<?php echo $user->id;?>"/>
+            <input type="hidden" name="id" value="<?php echo $book->id;?>"/>
             <div class="form-group">
-                <input class="form-control" value="<?php echo $user->name;?>" name="name" type="text" placeholder="Name"/>
+                <input class="form-control" value="<?php echo $book->name;?>" name="name" type="text" placeholder="Name"/>
             </div>
             <div class="form-group">
-                <input class="form-control" value="<?php echo $user->email;?>" name="email" type="email" placeholder="Email"/>
-            </div>
-            <div class="form-group">
-                <input class="form-control" name="password" type="password" placeholder="Password"/>
+                <input class="form-control" value="<?php echo $book->category;?>" name="category" type="text" placeholder="Category"/>
             </div>
             <div class="form-group">
                 <button type="submit" class="btn btn-danger">Update</button>

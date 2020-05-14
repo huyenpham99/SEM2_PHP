@@ -7,7 +7,7 @@ if(count($_POST) > 0):
     $pwd = $_POST['password'];
 
     // insert to table
-    $user = new \model\User($id,$name,$email,$pwd);
+    $user = new \model\Book($id,$name,$email,$pwd);
     $user->save();
 
     header("Location: ?route=users");

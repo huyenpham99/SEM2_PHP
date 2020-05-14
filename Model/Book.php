@@ -4,21 +4,19 @@ namespace ass1;
 namespace Model;
 use lib\connector;
 use lib\model;
-class User extends model {
+class Book extends Model {
     public $id;
     public $name;
-    public $email;
-    public $password;
+    public $category;
 
-    protected $table = "users";
+    protected $table = "books";
 
 
-    public function __construct($id=null,$name=null,$email=null,$password=null)
+    public function __construct($id=null,$name=null, $category=null)
     {
         $this->id = $id;
         $this->name = $name;
-        $this->email = $email;
-        $this->password = md5($password);
+        $this->category = $category;
     }
 
     public function all(){
@@ -28,7 +26,7 @@ class User extends model {
     }
 
 
-    public function getUsers(){
+    public function getBooks(){
         $sql = "SELECT * FROM ".$this->getTable();
         $rs = $this->getConn()->query($sql);
         return $this->toArray($rs);
@@ -37,9 +35,8 @@ class User extends model {
 
 
     public function save(){ // la su ket hop cua insert va update
-        $sql_text = "INSERT INTO ".$this->getTable()." (id,name,email,password) VALUES(".(is_null($this->id)?'null':$this->id).",'".$this->name.
-            "','".$this->email."','".$this->password."') ON DUPLICATE KEY UPDATE name = '".$this->name."',email = '".$this->email.
-            "', password = '".$this->password."';";
+        $sql_text = "INSERT INTO ".$this->getTable()." (id,name,category) VALUES(".(is_null($this->id)?'null':$this->id).",'".$this->name.
+            "','".$this->category."') ON DUPLICATE KEY UPDATE name = '".$this->name."',category = '".$this->category. "';";
         try{
             $this->getConn()->query($sql_text);
         }catch (\Exception $e){
@@ -52,7 +49,7 @@ class User extends model {
         $ary = $this->toArray($this->getConn()->query($sql_text));
         if(count($ary) > 0){
             $data = $ary[0];
-            return new User($data["id"],$data["name"],$data["email"],$data["password"]);
+            return new Book($data["id"],$data["name"],$data["category"]);
         }
         return null;
     }
@@ -61,16 +58,4 @@ class User extends model {
         $sql_text = "DELETE FROM ".$this->getTable()." WHERE id = ".$this->id;
         $this->getConn()->query($sql_text);
     }
-
-    public function attempt($email,$password){
-        $password = md5($password);
-        $sql_text = "SELECT * FROM ".$this->getTable()." WHERE email LIKE '".$email."' AND password LIKE '".$password."'";
-        $ary = $this->toArray($this->getConn()->query($sql_text));
-        if(count($ary) > 0){
-            $data = $ary[0];
-            return $data;
-        }
-        return null;
-    }
-
 }

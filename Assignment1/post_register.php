@@ -7,7 +7,7 @@ if(count($_POST) > 0):
     $password = $_POST['password'];
 
 
-    $user = new \Model\User(null, $name, $email, $password);
+    $user = new \Model\Book(null, $name, $email, $password);
 
     $user->save();
 

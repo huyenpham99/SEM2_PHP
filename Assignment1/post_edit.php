@@ -9,7 +9,7 @@ if(count($_POST) > 0):
     $password = $_POST['password'];
 
     // insert to table
-    $user = new \Model\User($id,$name,$email,$password);
+    $user = new \Model\Book($id,$name,$email,$password);
     $user->save();
 
     header("Location: ?route=users");// dieu huong tro lai trang danh sach

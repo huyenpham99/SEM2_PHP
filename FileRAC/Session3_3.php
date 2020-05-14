@@ -12,7 +12,7 @@
 <body>
 <h1>Thông tin sinh viên</h1>
 <?php
-include_once ("Students.php"); //nap file php vao 1 file khac
+include_once("Students.php"); //nap file php vao 1 file khac
 ?>
 <?php foreach ($student as $s): ?>
     <table class="table">

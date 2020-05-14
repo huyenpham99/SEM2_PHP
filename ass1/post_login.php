@@ -5,7 +5,7 @@ if(count($_POST)>0):
     $pwd = $_POST['password'];
 
     //insert to table
-    $user = new \model\User();
+    $user = new \model\Book();
     $user = $user->attempt($email,$pwd);
 
     if(!is_null($user)){

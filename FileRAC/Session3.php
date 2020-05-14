@@ -32,7 +32,7 @@ if($rs->num_rows>0){
 </head>
 <body>
 <?php
-include_once ("lib/connect.php")
+include_once("lib/connect.php")
 ?>
 <?php
 foreach ($students as $s):?>

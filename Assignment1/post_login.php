@@ -7,7 +7,7 @@ if(count($_POST) > 0):
     $email = $_POST['email'];
     $password = $_POST['password'];
 
-    $user = new \Model\User();
+    $user = new \Model\Book();
     $user = $user->attempt($email,$password);
     if(!is_null($user)){
         $_SESSION['user']= $user;

@@ -1,41 +1,37 @@
 <?php
 
 class Controller{
-
-    public function login(){
-        require_once "View/login.php";
+    public function books(){
+        require_once "View/books.php";
     }
 
-    public function postLogin(){
-        $email = $_POST['email'];
-        $pwd = $_POST['password'];
-        $user = new \Model\User();
-        $user = $user->attempt($email,$pwd);
-        if(!is_null($user)){
-            $_SESSION['user']= $user;
-            header("Location: ?route=users");
-        }else{
-            header("Location: ?route=login");
-        }
+    public function editBook(){
+    //nhan thong tin tu form
+    $id = $_POST['id'];
+    $name = $_POST['name'];
+    $category = $_POST['category'];
+    //insert to table
+    $book = new \Model\Book($id, $name, $category);
+    $book->save();
+    header("Location: ?route=books");
+}
+    public function delete(){
+        $book = new \Model\Book();
+        $book = $book->find($_GET["id"]);
+        $book->delete();
+        header("Location: ?route=books");
     }
-
-    public function register(){
-        require_once "View/register.php";
+    public function addBook(){
+        require_once "View/addBook.php";
     }
-
-    public function postRegister(){
+    public function postAdd(){
+        //nhan thong tin tu form
         $name = $_POST['name'];
-        $email = $_POST['email'];
-        $pwd = $_POST['password'];
-
-        // insert to table
-        $user = new \Model\User(null,$name,$email,$pwd);
-        $user->save();
-
-        header("Location: ?route=users");// dieu huong tro lai trang danh sach
+        $category = $_POST['category'];
+        //insert to table
+        $book = new \Model\Book(null, $name, $category);
+        $book->save();
+        header("Location: ?route=books");
     }
 
-    public function users(){
-        require_once "View/users.php";
-    }
 }
