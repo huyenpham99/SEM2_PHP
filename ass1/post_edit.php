@@ -1,16 +1,14 @@
 <?php
 if(count($_POST) > 0):
-
-
 // nhan thong tin tu form
     $id = $_POST['id'];
     $name = $_POST['name'];
     $email = $_POST['email'];
-    $password = $_POST['password'];
+    $pwd = $_POST['password'];
 
     // insert to table
-    $user = new \Model\User($id,$name,$email,$password);
+    $user = new \model\User($id,$name,$email,$pwd);
     $user->save();
 
-    header("Location: ?route=users");// dieu huong tro lai trang danh sach
+    header("Location: ?route=users");
 endif;

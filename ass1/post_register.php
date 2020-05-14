@@ -4,11 +4,10 @@ if(count($_POST) > 0):
 // nhan thong tin tu form
     $name = $_POST['name'];
     $email = $_POST['email'];
-    $password = $_POST['password'];
+    $pwd = $_POST['password'];
 
-
-    $user = new \Model\User(null, $name, $email, $password);
-
+    // insert to table
+    $user = new \model\User(null,$name,$email,$pwd);
     $user->save();
 
     header("Location: ?route=users");// dieu huong tro lai trang danh sach

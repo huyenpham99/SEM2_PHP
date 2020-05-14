@@ -1,10 +1,10 @@
 <?php
 namespace lib;
 require_once "connect.php";
-class connector{
+class Connector{
     private static $conn;
 
-    public static function connector(){
+    public static function Connector(){
         if(is_null(self::$conn)){
             self::$conn = connect();
         }

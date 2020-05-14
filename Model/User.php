@@ -1,10 +1,9 @@
 <?php
-namespace assignment1;
+namespace ass1;
+
+namespace Model;
 use lib\connector;
 use lib\model;
-
-require_once "../lib/Model.php";
-
 class User extends model {
     public $id;
     public $name;
@@ -12,6 +11,7 @@ class User extends model {
     public $password;
 
     protected $table = "users";
+
 
     public function __construct($id=null,$name=null,$email=null,$password=null)
     {
@@ -21,22 +21,25 @@ class User extends model {
         $this->password = md5($password);
     }
 
-    public function getUsers(){
-        $sql = "SELECT * FROM ".$this->getTable();
-        $rs = $this->getConn()->query($sql);
-        return $this->toArray($rs);
-    }
-
     public function all(){
         $sql = "SELECT * FROM ".$this->getTable();
         $rs = $this->getConn()->query($sql);
         return $this->toArray($rs);
     }
 
+
+    public function getUsers(){
+        $sql = "SELECT * FROM ".$this->getTable();
+        $rs = $this->getConn()->query($sql);
+        return $this->toArray($rs);
+    }
+
+
+
     public function save(){ // la su ket hop cua insert va update
-        $sql_text = "INSERT INTO ".$this->getTable()." (id,name,email,password)
-         VALUES(".(is_null($this->id)?'null':$this->id).",'".$this->name."','".$this->email."','".$this->password."') 
-        ON DUPLICATE KEY UPDATE name = '".$this->name."',email = '".$this->email. "', password = '".$this->password."';";
+        $sql_text = "INSERT INTO ".$this->getTable()." (id,name,email,password) VALUES(".(is_null($this->id)?'null':$this->id).",'".$this->name.
+            "','".$this->email."','".$this->password."') ON DUPLICATE KEY UPDATE name = '".$this->name."',email = '".$this->email.
+            "', password = '".$this->password."';";
         try{
             $this->getConn()->query($sql_text);
         }catch (\Exception $e){
@@ -58,4 +61,16 @@ class User extends model {
         $sql_text = "DELETE FROM ".$this->getTable()." WHERE id = ".$this->id;
         $this->getConn()->query($sql_text);
     }
+
+    public function attempt($email,$password){
+        $password = md5($password);
+        $sql_text = "SELECT * FROM ".$this->getTable()." WHERE email LIKE '".$email."' AND password LIKE '".$password."'";
+        $ary = $this->toArray($this->getConn()->query($sql_text));
+        if(count($ary) > 0){
+            $data = $ary[0];
+            return $data;
+        }
+        return null;
+    }
+
 }

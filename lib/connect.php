@@ -1,26 +1,26 @@
-<?php
+<?php //lay du lieu tu mysql dua vao php
 function connect(){
     $host = "localhost";
     $userDB = "root";
-    $passDB = "";// xamp thi chuoi ""
-    $dbName = "1907m";
-    $conn = new mysqli($host,$userDB,$passDB,$dbName);// khong can port
+    $passDB = "";
+    $dbName ="1907m";
+    $conn = new mysqli($host,$userDB,$passDB,$dbName); //không cần port
 
     if($conn->connect_error){
-        die("Connect fail"); // die la ham dung luong dang chay, php la ngon ngu don luong ( single thread)
+        die("Connect fail"); //die là hàm dùng để chạy , php là ngôn ngữ đơn luồng (single throw)
     }
+
     return $conn;
 }
 
 function getAll($table){
-    $conn = connect();
+    $conn =connect();
     $sql_text = "SELECT * FROM ".$table;
-    $data = [];
-    $rs = $conn->query($sql_text);
-    if($rs->num_rows > 0){
+    $data =[];
+    $rs =$conn->query($sql_text);
+    if ($rs->num_rows >0){
         while ($row = $rs->fetch_assoc()){
-            $data [] = $row;
-            // moi row la 1 mang, cos cac key la cac column
+            $data [] =$row;
         }
     }
     return $data;
@@ -28,10 +28,13 @@ function getAll($table){
 
 function toArray($rs){
     $data = [];
-    if($rs->num_rows > 0){
-        while ($row = $rs->fetch_assoc()){
-            $data [] = $row;
+    if($rs -> num_rows > 0){
+        while ($row = $rs -> fetch_assoc()){
+            $data[] = $row;
+            //mỗi row mà 1 mảng có các key là các column
         }
+        //var_dump($students);
     }
+    //students là mang chứa các sinh viên
     return $data;
 }
